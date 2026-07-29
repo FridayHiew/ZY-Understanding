@@ -1,0 +1,6 @@
+{
+  "name": "卓阅理解",
+  "description": "化繁为易，阁藏万象 — Yield insight, gather the infinite. Offline knowledge training, quiz system & PWA portal.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
