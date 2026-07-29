@@ -1,9 +1,9 @@
 {
-  "id": "./",
+  "id": "./?app=zy_comprehension",
   "scope": "./",
   "start_url": "./?source=pwa",
-  "name": "卓越试题",
-  "short_name": "卓越试题",
+  "name": "卓阅理解",
+  "short_name": "卓阅理解",
   "description": "化繁为易，阁藏万象 — Yield insight, gather the infinite. Offline Knowledge Training & Quiz Portal",
   "display": "standalone",
   "background_color": "#FDFCF8",

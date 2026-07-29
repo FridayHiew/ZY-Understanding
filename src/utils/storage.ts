@@ -3,7 +3,7 @@ import { SAMPLE_COLLECTIONS } from '../data/sampleCollections';
 import { buildLicenseData, generateLicenseKey, getOrCreateDeviceId, HARDCODED_MASTER_KEYS } from './crypto';
 import { loadStateFromIndexedDB, saveStateToIndexedDB, clearIndexedDB } from './indexedDB';
 
-const STORAGE_KEY = 'yiga_app_zy_v1';  // 原來是 'oktp_app_state_v1'
+const STORAGE_KEY = 'yiga_app_zy_comprehension_v1';  // 原來是 'oktp_app_state_v1'
 
 const DEFAULT_SETTINGS: AppSettings = {
   language: 'zh',

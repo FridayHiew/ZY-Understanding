@@ -1,6 +1,6 @@
 import { AppStorageState } from '../types';
 
-const DB_NAME = 'YiGa_ZY_LocalDatabase_v1';  // 原來是 'OKTP_LocalDatabase_v1'
+const DB_NAME = 'YiGa_ZY_Comprehension_LocalDatabase_v1';  // 原來是 'OKTP_LocalDatabase_v1'
 const STORE_NAME = 'app_state_store';
 const STATE_KEY = 'current_app_state';
 
