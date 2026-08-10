@@ -26,7 +26,7 @@ export interface LicenseData {
 
 export interface Question {
   id: string;
-  category: string;
+  category?: string;
   questionText: string;
   passage?: string; // Optional passage for comprehension questions
   options: [string, string, string, string]; // Exactly 4 options A, B, C, D
@@ -37,7 +37,7 @@ export interface Question {
   knowledgeLevel?: string;
   questionType?: string;
   tags?: string[];
-  statements?: Record<string, string>;
+  statements?: string[];
   sourceReference?: string;
 }
 

@@ -90,10 +90,10 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
         {/* Official Slogan */}
         <div className="mt-3.5 p-3.5 rounded-2xl bg-[#F5F2EA]/80 dark:bg-[#282C28]/80 border border-[#E8E2D2] dark:border-[#353B35] shadow-sm max-w-xs w-full">
           <p className="text-base sm:text-lg font-serif italic text-[#5A6D5B] dark:text-[#A3B5A4] font-medium leading-snug">
-            “化繁为易，阁藏万象”
+            “化繁为易，知解万象”
           </p>
           <p className="text-xs font-serif text-[#7C776B] dark:text-[#A09886] mt-1 tracking-wide">
-            “Yield insight, gather the infinite.”
+            “Read beyond words, discover the meaning..”
           </p>
         </div>
       </div>

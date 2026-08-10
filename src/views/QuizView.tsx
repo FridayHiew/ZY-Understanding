@@ -45,10 +45,18 @@ export const QuizView: React.FC<QuizViewProps> = ({
     if (config.mode === 'PRACTICE' || config.mode === 'EXAM') {
       const col = collections.find((c) => c.id === config.collectionId) || collections[0];
       if (col && col.questions.length > 0) {
-        const isComprehension = Boolean(col.passage) || col.categories?.some((cat) => /阅读|Pemahaman|Reading/.test(cat));
-        selectedQuestions = isComprehension ? [...col.questions] : [...col.questions].sort(() => Math.random() - 0.5);
-        if (config.questionCount) {
-          selectedQuestions = selectedQuestions.slice(0, config.questionCount);
+        if (config.mode === 'EXAM') {
+          // EXAM mode is always randomized and capped at a maximum of 10 questions
+          selectedQuestions = [...col.questions]
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 10);
+        } else {
+          // PRACTICE mode keeps comprehension questions in original sequence but shuffles others
+          const isComprehension = Boolean(col.passage) || col.categories?.some((cat) => /阅读|Pemahaman|Reading/.test(cat));
+          selectedQuestions = isComprehension ? [...col.questions] : [...col.questions].sort(() => Math.random() - 0.5);
+          if (config.questionCount) {
+            selectedQuestions = selectedQuestions.slice(0, config.questionCount);
+          }
         }
       }
     } else if (config.mode === 'MISTAKE_REVIEW') {
@@ -359,6 +367,16 @@ export const QuizView: React.FC<QuizViewProps> = ({
                   )}
                 </div>
 
+                {matchedQ?.statements && matchedQ.statements.length > 0 && (
+                  <div className="my-2 p-2.5 rounded-lg bg-white/70 dark:bg-black/20 border border-slate-200/40 dark:border-slate-800/40 space-y-0.5">
+                    {matchedQ.statements.map((stmt, sIdx) => (
+                      <div key={sIdx} className="text-[11px] text-[#4E473C] dark:text-[#D1C9B8]">
+                        {stmt}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {matchedQ?.image && (
                   <div className="my-2 max-h-48 rounded-xl overflow-hidden border border-[#E8E2D2] dark:border-[#353B35] bg-[#F5F2EA] dark:bg-[#2D322D] flex items-center justify-center p-1.5 w-fit max-w-full">
                     <img
@@ -500,6 +518,16 @@ export const QuizView: React.FC<QuizViewProps> = ({
               <h3 className="text-base font-bold text-[#3E4A3E] dark:text-[#F5F2EA] leading-relaxed font-serif">
                 {qItem.questionText}
               </h3>
+
+              {qItem.statements && qItem.statements.length > 0 && (
+                <div className="my-2.5 p-3 rounded-lg bg-[#FDFBF7] dark:bg-[#252825] border border-[#ECE7DB] dark:border-[#3A403A] space-y-1">
+                  {qItem.statements.map((stmt, sIdx) => (
+                    <div key={sIdx} className="text-sm text-[#4E473C] dark:text-[#D1C9B8]">
+                      {stmt}
+                    </div>
+                  ))}
+                </div>
+              )}
 
               {qItem.image && (
                 <div className="my-3 max-h-64 rounded-2xl overflow-hidden border border-[#E8E2D2] dark:border-[#353B35] bg-[#F5F2EA] dark:bg-[#2D322D] flex items-center justify-center p-2">

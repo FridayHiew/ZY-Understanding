@@ -449,8 +449,8 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                               collectionId: collection.id,
                               collectionName: collection.name,
                               mode: 'EXAM',
-                              questionCount: Math.min(20, collection.questions.length),
-                              timeLimitMinutes: Math.min(20, collection.questions.length),
+                              questionCount: Math.min(10, collection.questions.length),
+                              timeLimitMinutes: Math.min(10, collection.questions.length),
                             })
                           }
                           className="w-full py-2 px-3 rounded-xl bg-[#EAE5D8] dark:bg-[#2D322D] hover:bg-[#D9C5B2] text-[#3E4A3E] dark:text-[#F5F2EA] font-bold text-xs flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 border border-[#D9C5B2] dark:border-[#353B35]"
@@ -780,6 +780,16 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                     <p className="font-semibold text-[#2D2A26] dark:text-[#EAE7DF] mb-2">
                       {q.questionText}
                     </p>
+
+                    {q.statements && q.statements.length > 0 && (
+                      <div className="my-2 p-2.5 rounded-lg bg-white/50 dark:bg-black/20 border border-[#E8E2D2]/50 dark:border-[#353B35]/50 space-y-0.5">
+                        {q.statements.map((stmt, sIdx) => (
+                          <div key={sIdx} className="text-[11px] text-[#4E473C] dark:text-[#D1C9B8]">
+                            {stmt}
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
                     {q.image && (
                       <div className="my-3 max-h-64 rounded-2xl overflow-hidden border border-[#E8E2D2] dark:border-[#353B35] bg-[#F5F2EA] dark:bg-[#2D322D] flex items-center justify-center p-2">

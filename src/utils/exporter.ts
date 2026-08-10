@@ -32,14 +32,8 @@ function formatCollectionForExport(collection: KnowledgeCollection) {
       const optionLetters = ['A', 'B', 'C', 'D'];
       return {
         id: q.id,
-        category: q.category || '',
-        passage: q.passage || collection.passage || '',
-        difficulty: q.difficulty || collection.difficulty || 'Standard 1',
-        knowledgeLevel: q.knowledgeLevel || 'Analyze',
-        questionType: q.questionType || 'Analysis',
-        tags: q.tags || [],
         questionText: q.questionText,
-        statements: q.statements || {},
+        statements: q.statements || [],
         optionA: q.options[0] || '',
         optionB: q.options[1] || '',
         optionC: q.options[2] || '',
@@ -90,7 +84,7 @@ export async function exportCollectionAsZIP(collection: KnowledgeCollection) {
   }
 
   const content = await zip.generateAsync({ type: 'blob' });
-  const filename = `${collection.name.toLowerCase().replace(/[^a-z0-9]/g, '_')}_package.zip`;
+  const filename = `${collection.name}.zip`;
   downloadBlob(content, filename);
 }
 
@@ -109,10 +103,8 @@ export function downloadSampleJSONTemplate() {
     questions: [
       {
         id: 'zh-q001',
-        category: '阅读理解',
-        passage: '清晨，天刚蒙蒙亮，小蜜蜂黄黄就飞出了蜂巢。花园里开满了五颜六色的花朵，有红彤彤的玫瑰、黄澄澄的菊花，还有雪白的百合。黄黄在一朵朵花采蜜，它把花蜜存放在腿上的小篮子里。虽然很累，但想到能为蜂群酿出甜甜的蜂蜜，黄黄心里感到非常快乐。',
         questionText: '根据短文，小蜜蜂黄黄是什么时候飞出蜂巢的？',
-        statements: {},
+        statements: [],
         optionA: '中午太阳高照时',
         optionB: '清晨，天刚蒙蒙亮',
         optionC: '傍晚太阳落山时',
@@ -124,10 +116,8 @@ export function downloadSampleJSONTemplate() {
       },
       {
         id: 'zh-q002',
-        category: '阅读理解',
-        passage: '清晨，天刚蒙蒙亮，小蜜蜂黄黄就飞出了蜂巢。花园里开满了五颜六色的花朵，有红彤彤的玫瑰、黄澄澄的菊花，还有雪白的百合。黄黄在一朵朵花采蜜，它把花蜜存放在腿上的小篮子里。虽然很累，但想到能为蜂群酿出甜甜的蜂蜜，黄黄心里感到非常快乐。',
         questionText: '小蜜蜂黄黄把采到的花蜜存放在哪里？',
-        statements: {},
+        statements: [],
         optionA: '背上的小口袋',
         optionB: '翅膀下面',
         optionC: '腿上的小篮子里',
@@ -148,21 +138,27 @@ export function downloadSampleJSONTemplate() {
  * Download sample CSV template matching system schema
  */
 export function downloadSampleCSVTemplate() {
+  const metadata = [
+    '# collectionName: 华文阅读理解 - 小蜜蜂采蜜记',
+    '# version: 1',
+    '# description: 小学华文阅读理解专项训练。包含短文及相关理解问题。',
+    '# group: Chinese',
+    '# difficulty: 二年级',
+    '# tags: 阅读理解,华文,短文',
+    '# passage: "清晨，天刚蒙温亮，小蜜蜂黄黄就飞出了蜂巢。花园里开满了五颜六色的花朵，有红彤彤的玫瑰、黄澄澄的菊花，还有雪白的百合。黄黄在一朵朵花采蜜，它把花蜜存放在腿上的小篮子里。虽然很累，但想到能为蜂群酿出甜甜的蜂蜜，黄黄心里感到非常快乐。"'
+  ];
+
   const headers = [
     'ID',
     'Category',
-    'Passage',
     'Question Text',
+    'statements',
     'Option A',
     'Option B',
     'Option C',
     'Option D',
     'Correct Answer',
     'Explanation',
-    'Difficulty',
-    'Knowledge Level',
-    'Question Type',
-    'Tags',
     'Source Reference',
     'Image File'
   ];
@@ -170,18 +166,14 @@ export function downloadSampleCSVTemplate() {
   const sampleRow1 = [
     'zh-csv-001',
     '阅读理解',
-    '清晨，天刚蒙蒙亮，小蜜蜂黄黄就飞出了蜂巢。花园里开满了五颜六色的花朵，有红彤彤的玫瑰、黄澄澄的菊花，还有雪白的百合。黄黄在一朵朵花采蜜，它把花蜜存放在腿上的小篮子里。虽然很累，但想到能为蜂群酿出甜甜的蜂蜜，黄黄心里感到非常快乐。',
     '根据短文，小蜜蜂黄黄是什么时候飞出蜂巢的？',
+    '',
     '中午太阳高照时',
     '清晨，天刚蒙蒙亮',
     '傍晚太阳落山时',
     '深夜月亮升起时',
     'B',
     '短文第一句指出“清晨，天刚蒙蒙亮，小蜜蜂黄黄就飞出了蜂巢”。',
-    '二年级',
-    'Analyze',
-    'Analysis',
-    '阅读理解,华文',
     '小学华文阅读理解',
     ''
   ];
@@ -189,18 +181,14 @@ export function downloadSampleCSVTemplate() {
   const sampleRow2 = [
     'zh-csv-002',
     '阅读理解',
-    '清晨，天刚蒙蒙亮，小蜜蜂黄黄就飞出了蜂巢。花园里开满了五颜六色的花朵，有红彤彤的玫瑰、黄澄澄的菊花，还有雪白的百合。黄黄在一朵朵花采蜜，它把花蜜存放在腿上的小篮子里。虽然很累，但想到能为蜂群酿出甜甜的蜂蜜，黄黄心里感到非常快乐。',
     '小蜜蜂黄黄把采到的花蜜存放在哪里？',
+    '',
     '背上的小口袋',
     '翅膀下面',
     '腿上的小篮子里',
     '头上的帽子里',
     'C',
     '短文写道“它把花蜜存放在腿上的小篮子里”。',
-    '二年级',
-    'Analyze',
-    'Analysis',
-    '阅读理解,华文',
     '小学华文阅读理解',
     ''
   ];
@@ -216,7 +204,14 @@ export function downloadSampleCSVTemplate() {
     }).join(',');
   };
 
-  const csvContent = [formatCSVRow(headers), formatCSVRow(sampleRow1), formatCSVRow(sampleRow2)].join('\n');
+  const csvContent = [
+    ...metadata,
+    '',
+    formatCSVRow(headers),
+    formatCSVRow(sampleRow1),
+    formatCSVRow(sampleRow2)
+  ].join('\n');
+
   // Use BOM for Excel UTF-8 encoding support
   const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
   downloadBlob(blob, 'sample_questions_template.csv');
@@ -241,10 +236,8 @@ export async function downloadSampleZIPTemplate() {
     questions: [
       {
         id: 'zh-q001',
-        category: '阅读理解',
-        passage: '清晨，天刚蒙蒙亮，小蜜蜂黄黄就飞出了蜂巢。花园里开满了五颜六色的花朵，有红彤彤的玫瑰、黄澄澄的菊花，还有雪白的百合。黄黄在一朵朵花采蜜，它把花蜜存放在腿上的小篮子里。虽然很累，但想到能为蜂群酿出甜甜的蜂蜜，黄黄心里感到非常快乐。',
         questionText: '根据短文，小蜜蜂黄黄是什么时候飞出蜂巢的？',
-        statements: {},
+        statements: [],
         optionA: '中午太阳高照时',
         optionB: '清晨，天刚蒙蒙亮',
         optionC: '傍晚太阳落山时',
